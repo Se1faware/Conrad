@@ -24,6 +24,7 @@ import {
   Languages,
   ListChecks,
   Loader2,
+  Moon,
   Play,
   RefreshCw,
   RotateCcw,
@@ -32,6 +33,7 @@ import {
   ShieldAlert,
   ShieldCheck,
   Timer,
+  Sun,
   XCircle,
 } from 'lucide-react';
 import {
@@ -1162,7 +1164,7 @@ export default function DemoOne() {
   const mainPanelRef = useRef<HTMLElement>(null);
   const ringProgressRef = useRef<number[]>(Array(DETECTION_STAGE_COUNT).fill(0));
   const t = copy[language];
-  const dark = false;
+  const [dark, setDark] = useState(false);
 
   useEffect(() => {
     if (!requestModelOpen) {
@@ -2458,28 +2460,28 @@ export default function DemoOne() {
 
   const overviewStats = [
     {
-      label: language === 'zh' ? '总测试数' : 'Total tests',
-      value: '128',
+      label: language === 'zh' ? '自动题' : 'Automated probes',
+      value: String(probes.length),
       icon: ListChecks,
       tone: 'text-blue-600',
     },
     {
-      label: language === 'zh' ? '通过数' : 'Passed',
-      value: '96',
+      label: language === 'zh' ? '通过项' : 'Passed',
+      value: String(scoreData.pass),
       icon: CheckCircle2,
       tone: 'text-emerald-600',
     },
     {
-      label: language === 'zh' ? '失败数' : 'Failed',
-      value: '12',
+      label: language === 'zh' ? '风险项' : 'Risks',
+      value: String(scoreData.fail),
       icon: XCircle,
       tone: 'text-rose-600',
     },
     {
-      label: language === 'zh' ? '进行中' : 'Running',
-      value: '20',
+      label: language === 'zh' ? '观察项' : 'Watch',
+      value: String(scoreData.warn),
       icon: Loader2,
-      tone: 'text-sky-600',
+      tone: 'text-amber-500',
     },
     {
       label: language === 'zh' ? '消耗 Token' : 'Tokens used',
@@ -2745,9 +2747,29 @@ export default function DemoOne() {
                   配置接口、选择请求模型，然后启动一次按队列执行的模型检测。
                 </p>
               </div>
-              <div className='config-chip'>
-                <span className='h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.9)]' />
-                Ready
+              <div className='config-header-actions'>
+                <button
+                  type='button'
+                  onClick={() => setLanguage((current) => (current === 'zh' ? 'en' : 'zh'))}
+                  className='config-icon-control'
+                  title={t.switchLanguage}
+                  aria-label={t.switchLanguage}
+                >
+                  <Languages size={15} />
+                </button>
+                <button
+                  type='button'
+                  onClick={() => setDark((current) => !current)}
+                  className='config-icon-control'
+                  title={t.switchTheme}
+                  aria-label={t.switchTheme}
+                >
+                  {dark ? <Sun size={15} /> : <Moon size={15} />}
+                </button>
+                <div className='config-chip'>
+                  <span className='h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.9)]' />
+                  Ready
+                </div>
               </div>
             </div>
 
@@ -2966,6 +2988,15 @@ export default function DemoOne() {
                 aria-label={t.switchLanguage}
               >
                 <Languages size={17} />
+              </button>
+              <button
+                type='button'
+                onClick={() => setDark((current) => !current)}
+                className='toolbar-icon-button'
+                title={t.switchTheme}
+                aria-label={t.switchTheme}
+              >
+                {dark ? <Sun size={17} /> : <Moon size={17} />}
               </button>
             </div>
           </header>

@@ -32,7 +32,7 @@
   --chart-3: oklch(0.7 0.2 140);
   --chart-4: oklch(0.7 0.2 240);
   --chart-5: oklch(0.6 0.25 300);
-  --radius: 0.5rem;
+  --radius: 1rem;
   --sidebar: oklch(0 0 0 / 0.9);
   --sidebar-foreground: oklch(1 0 0);
   --sidebar-primary: oklch(0.65 0.25 25);
@@ -96,7 +96,9 @@ body,
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", var(--font-geist-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 .primary-panel {
@@ -243,7 +245,7 @@ body {
   overflow-y: hidden;
   padding: var(--tester-shell-top-padding) var(--tester-shell-padding)
     var(--tester-shell-bottom-padding);
-  background: #0a0a0c;
+  background: #08111d;
   transition: background-color 0.8s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
@@ -254,8 +256,8 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 1;
-  filter: brightness(0.86) contrast(1.08) saturate(1.16);
+  opacity: 0.66;
+  filter: brightness(0.74) contrast(0.96) saturate(0.86);
   pointer-events: none;
 }
 
@@ -265,14 +267,10 @@ body {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 18% 12%, rgba(59, 130, 246, 0.16), transparent 32%),
-    radial-gradient(circle at 78% 22%, rgba(124, 58, 237, 0.13), transparent 34%),
-    linear-gradient(
-      135deg,
-      rgba(0, 0, 0, 0.28) 0%,
-      rgba(3, 7, 18, 0.2) 48%,
-      rgba(5, 7, 20, 0.24) 100%
-    );
+    radial-gradient(ellipse 68% 56% at 4% -8%, rgba(80, 164, 255, 0.32), transparent 58%),
+    radial-gradient(ellipse 54% 55% at 100% 12%, rgba(140, 109, 255, 0.2), transparent 60%),
+    radial-gradient(ellipse 60% 70% at 48% 110%, rgba(81, 202, 187, 0.15), transparent 65%),
+    linear-gradient(135deg, rgba(5, 14, 27, 0.34), rgba(8, 15, 28, 0.56));
   opacity: 1;
   transition: opacity 0.8s cubic-bezier(0.65, 0, 0.35, 1);
 }
@@ -280,7 +278,7 @@ body {
 .tester-shell-transitioning,
 .tester-shell-entered {
   align-items: start;
-  background-color: #f7f9ff;
+  background-color: #e9f0f7;
 }
 
 .tester-shell-transitioning .tester-background,
@@ -306,14 +304,38 @@ body {
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.62), rgba(245, 249, 255, 0.36));
+  border: 1px solid rgba(255, 255, 255, 0.74);
+  border-radius: 24px;
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.5),
-    0 24px 80px rgba(31, 41, 55, 0.14);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+    inset 0 1px 0 rgba(255, 255, 255, 0.74),
+    0 18px 50px rgba(39, 59, 82, 0.14),
+    0 2px 8px rgba(26, 46, 69, 0.05);
+  backdrop-filter: blur(36px) saturate(145%);
+  -webkit-backdrop-filter: blur(36px) saturate(145%);
+}
+
+.config-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.config-icon-control {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.82);
+  transition: transform 180ms ease, background-color 180ms ease;
+}
+
+.config-icon-control:hover {
+  background: rgba(255, 255, 255, 0.24);
+  transform: scale(1.04);
 }
 
 .config-stage-panel,
@@ -330,7 +352,7 @@ body {
   width: min(920px, calc(100vw - 32px));
   justify-self: center;
   margin-left: 0;
-  padding: 22px;
+  padding: 26px;
   color: white;
   overflow: visible;
 }
@@ -351,7 +373,7 @@ body {
 
 .config-primary-column {
   padding-right: 18px;
-  border-right: 1px solid rgba(255, 255, 255, 0.16);
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .config-action-column .start-test-button {
@@ -462,8 +484,8 @@ body {
   justify-content: center;
   gap: 5px;
   border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.09);
   padding: 6px;
   color: rgba(255, 255, 255, 0.68);
   font-size: 11px;
@@ -478,7 +500,7 @@ body {
 .provider-tile:hover,
 .provider-tile-active {
   border-color: rgba(255, 255, 255, 0.68);
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.88);
   color: #0f172a;
   transform: translateY(-1px);
 }
@@ -488,8 +510,8 @@ body {
   height: 44px;
   width: 100%;
   border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 14px;
-  background: rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  background: rgba(3, 13, 27, 0.26);
   color: white;
   outline: none;
   transition:
@@ -619,10 +641,10 @@ body {
   left: 0;
   z-index: 80;
   overflow: hidden;
-  border: 2px solid #000;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 22px 64px rgba(15, 23, 42, 0.26);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 18px;
+  background: rgba(248, 251, 255, 0.88);
+  box-shadow: 0 22px 64px rgba(15, 23, 42, 0.2);
   color: #0f172a;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -665,9 +687,9 @@ body {
   gap: 10px;
   margin-top: 18px;
   border: 0;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #0284c7 0%, #2563eb 48%, #4f46e5 100%);
-  box-shadow: 0 18px 42px rgba(37, 99, 235, 0.38);
+  border-radius: 17px;
+  background: linear-gradient(180deg, #1487ff 0%, #0071e3 100%);
+  box-shadow: 0 14px 30px rgba(0, 113, 227, 0.34), inset 0 1px rgba(255, 255, 255, 0.36);
   color: white;
   font-size: 15px;
   font-weight: 800;
@@ -679,7 +701,7 @@ body {
 
 .start-test-button:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 22px 52px rgba(37, 99, 235, 0.45);
+  box-shadow: 0 18px 34px rgba(0, 113, 227, 0.42), inset 0 1px rgba(255, 255, 255, 0.36);
 }
 
 .start-test-button:disabled {
@@ -722,12 +744,14 @@ body {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(247, 251, 255, 0.62);
+  backdrop-filter: blur(26px) saturate(150%);
+  -webkit-backdrop-filter: blur(26px) saturate(150%);
 }
 
 .run-logo-card.dashboard-logo-card {
   border-color: rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.48);
+  background: rgba(255, 255, 255, 0.42);
 }
 
 .run-logo-card .text-slate-950 {
@@ -979,9 +1003,7 @@ body {
   place-items: center;
   border: 1px solid rgba(255, 255, 255, 0.58);
   border-radius: 999px;
-  background:
-    radial-gradient(circle, rgba(30, 41, 59, 0.16) 1px, transparent 1.4px),
-    rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.3);
   background-size:
     8px 8px,
     auto;
@@ -1118,7 +1140,7 @@ body {
 
 .tester-shell-dark .testing-main-panel.glass-card,
 .tester-shell-dark .testing-main-panel .glass-card {
-  background: rgba(15, 23, 42, 0.48);
+  background: linear-gradient(135deg, rgba(23, 35, 54, 0.68), rgba(12, 21, 36, 0.46));
   border-color: rgba(255, 255, 255, 0.18);
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.08),
@@ -1176,6 +1198,44 @@ body {
 .tester-shell-dark .dashboard-titlebar {
   background:
     linear-gradient(135deg, rgba(37, 99, 235, 0.22), rgba(15, 23, 42, 0.78)), rgba(15, 23, 42, 0.72);
+}
+
+.tester-shell-dark .config-stage-panel {
+  background: linear-gradient(135deg, rgba(13, 26, 45, 0.76), rgba(10, 19, 34, 0.48));
+}
+
+.tester-shell-dark .model-picker-popover {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(17, 27, 43, 0.94);
+  color: #f8fafc;
+}
+
+.tester-shell-dark .model-picker-search,
+.tester-shell-dark .model-option-row:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.tester-shell-dark .model-picker-popover input,
+.tester-shell-dark .model-picker-popover .model-option-row,
+.tester-shell-dark .model-picker-popover .text-slate-900,
+.tester-shell-dark .model-picker-popover .text-slate-700 {
+  color: #e5edf8 !important;
+}
+
+.tester-shell-dark .model-picker-popover .border-slate-200 {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
 }
 
 .tester-shell-dark .final-score-banner .bg-white\/18 {
@@ -1264,6 +1324,19 @@ body {
 
   .config-stage-panel {
     padding: 18px;
+  }
+
+  .config-panel-header {
+    gap: 12px;
+  }
+
+  .config-header-actions {
+    gap: 5px;
+  }
+
+  .config-chip {
+    padding: 6px 8px;
+    font-size: 11px;
   }
 
   .progress-card-grid {
